@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <script src="http://cdn.chper.cn/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="http://cdn.chper.cn/light.min.css" type="text/css">
+        <title>发射弹幕！！</title>
+    </head>
+    
+    <body>
+        <h1>鹏鹏的弹幕</h1>
+        <div>
+            <input id="danmu" style="display: inline-block;" type="text">
+            <input id="send" style="display: inline-block;" type="button" value="发射">
+            <p id="mes"></p>
+            <a class="github-button" href="https://github.com/chenghaopeng/instant-web-page-bullet" data-size="large" data-show-count="true" aria-label="Star chenghaopeng/instant-web-page-bullet on GitHub">Star</a>
+        </div>
+        <script>
+            $(window).ready(function() {
+                $("#danmu").focus();
+                $("#send").click(function() {
+                    var dm = $("#danmu").val().trim();
+                    if(dm === "") {
+                        showMessage("弹幕不能为空！");
+                    }
+                    else {
+                        $("#danmu").val("");
+                        $("#danmu").focus();
+                        $.ajax({
+                            url: "deal.php",
+                            data: {op: "send", s: dm},
+                            type: "post",
+                            success: function() {
+                                showMessage("发射成功！");
+                            },
+                            error: function() {
+                                showMessage("发射失败！");
+                            }
+                        });
+                    }
+                });
+            });
+            var mes;
+            function showMessage(str) {
+                $("#mes").css("display", "block");
+                $("#mes").html(str);
+                if (mes) clearTimeout(mes);
+                mes = setTimeout(function() {
+                    $("#mes").css("display", "none");
+                }, 2000);
+            }
+        </script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </body>
+    
+</html>
